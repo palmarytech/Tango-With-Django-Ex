@@ -1,0 +1,64 @@
+{% extends "rango/base.html" %}
+
+{% block title_block %}
+Register
+{% endblock %}
+
+{% block body_block %}
+<!-- <div class="jumbotron p-6">
+  <h1 class="jumbotron-heading">Register Here</h1>
+</div>
+<form method ="POST" action=".">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Register">
+</form> -->
+
+<link href="https://getbootstrap.com/docs/4.0/examples/signin/signin.css" rel="stylesheet">
+<div class="container">
+  <div class="row">
+    <div class="form-group">
+      <form role="form" method="POST" action=".">
+        {% csrf_token %}
+        <div class="form-group">
+          
+          <p class="require"><label for="id_username" class="require">Username:</label>
+            <input type="text" id="id_username" name="username" maxlength="30" class="form-control">
+            <span class="helptext">
+              Required. 150 characters or fewer.
+              Letters, digits and @/./+/-/_ only.
+            </span>
+            <p>{{form.username.errors}}</p>
+          </p>
+          <p class="require"><label for="id_email" class="require">Email:</label>
+            <input type="email" id="id_email" name="email" class="form-control">
+          </p>
+          <p>{{form.email.errors}}</p>
+          <p class="require"><label for="id_password1" class="require">Passwod:</label>
+            <input type="password" id="id_password1" name="password1" class="form-control">
+            <span class="helptext">
+              <ul>
+                <li>Your password can't be too similar to your other personal information.</li>
+                <li>Your password must contain at least 8 characters.</li>
+                <li>Your password can't be a commonly used password.</li>
+                <li>Your password can't be entirely numeric.</li>
+              </ul>
+            </span>
+            <p>{{form.password1.errors}}</p>
+          </p>
+          <p class="require"><label for="id_password2" class="require">Passwod confirmation:</label>
+            <input type="password" id="id_password2" name="password2" class="form-control">
+            <span class="helptext">
+              <ul>
+                <li>Enter the same password as before, for verification.</li>
+              </ul>
+            </span>
+            <p>{{form.password2.errors}}</p>
+          </p>
+        </div>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

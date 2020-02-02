@@ -1,0 +1,3 @@
+NAME Rango-bing-searcher
+KEY1 18e26b8a5b644c02aa8abcff0ba72c68
+KEY2 9a58358b4f3e45389088dd6553973a95
