@@ -10,7 +10,10 @@ from rango.models import Page
 from rango.forms import CategoryForm, PageForm
 from rango.forms import UserForm, UserProfileForm
 from rango.bing_search import run_query
+<<<<<<< HEAD
 from django.views import View
+=======
+>>>>>>> master
 
 
 def index(request):
@@ -29,6 +32,7 @@ def index(request):
     return response
 
 
+<<<<<<< HEAD
 class AboutView(View):
     def get(self, request):
         context_dict = {}
@@ -48,6 +52,18 @@ class AboutView(View):
 #     visits = request.session['visits']
 #     context_dict['visits'] = visits
 #     return render(request, "rango/about.html", context=context_dict)
+=======
+def about(request):
+    context_dict = {
+        'your_name': 'Dave'
+    }
+    # print(request.method)
+    # print(request.users)
+    visitor_cookie_handler(request)
+    visits = request.session['visits']
+    context_dict['visits'] = visits
+    return render(request, "rango/about.html", context=context_dict)
+>>>>>>> master
 
 
 def get_server_side_cookie(request, cookie, default_val=None):
