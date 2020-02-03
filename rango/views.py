@@ -9,12 +9,15 @@ from django.utils.decorators import method_decorator
 
 from rango.models import Category
 from rango.models import Page
+from rango.models import User, UserProfile
 from rango.forms import CategoryForm, PageForm
 from rango.forms import UserForm, UserProfileForm
 from rango.bing_search import run_query
 from django.views import View
 
 # !IndexView Class-View
+
+
 class IndexView(View):
     def get(self, request):
         category_list = Category.objects.order_by('-likes')[:5]
@@ -26,6 +29,8 @@ class IndexView(View):
         return render(request, 'rango/index.html', context_dict)
 
 #!AboutView Class-View
+
+
 class AboutView(View):
     def get(self, request):
         context_dict = {}
@@ -69,7 +74,6 @@ class ShowCategoryView(View):
             context_dict['category'] = None
         return context_dict
 
-
     def get(self, request, category_name_slug):
         context_dict = self.create_context_dict(category_name_slug)
         return render(request, "rango/category.html", context_dict)
@@ -83,8 +87,10 @@ class ShowCategoryView(View):
             context_dict['result_list'] = run_query(query)
             context_dict['query'] = query
         return render(request, "rango/category.html", context_dict)
-        
+
 # !class-base view for add_category
+
+
 class AddCategoryView(View):
     @method_decorator(login_required())
     def get(self, request):
@@ -105,7 +111,6 @@ class AddCategoryView(View):
         return render(request, "rango/add_category.html", {'form': form})
 
 
-
 # !class-view for add_page
 class AddPageView(View):
     def create_context_dict(self, category_name_slug):
@@ -119,14 +124,12 @@ class AddPageView(View):
             context_dict['category'] = None
         return context_dict
 
-
     @method_decorator(login_required())
     def get(self, request, category_name_slug):
         context_dict = self.create_context_dict(category_name_slug)
         if context_dict['category'] == None:
             return redirect(reverse('rango:index'))
         return render(request, 'rango/add_page.html', context_dict)
-        
 
     @method_decorator(login_required())
     def post(self, request, category_name_slug):
@@ -139,12 +142,14 @@ class AddPageView(View):
                 page.views = 0
                 page.save()
                 context_dict['form'] = form
-                return redirect(reverse('rango:show_category',kwargs={'category_name_slug':category_name_slug }))
+                return redirect(reverse('rango:show_category', kwargs={'category_name_slug': category_name_slug}))
         else:
             print(form.errors)
         return render(request, 'rango/add_page.html', context_dict)
 
 # !base class view for restriction function
+
+
 class RestricteView(View):
     @method_decorator(login_required())
     def get(self, request):
@@ -157,9 +162,9 @@ class GotoUrlView(View):
     def get(self, request):
         page_id = None
         page_id = request.GET.get('page_id')
-        
+
         try:
-            selected_page = Page.objects.get(id = page_id)
+            selected_page = Page.objects.get(id=page_id)
         except Page.DoesNotExist:
             return redirect(reverse('rango:index'))
         selected_page.views = selected_page.views + 1
@@ -175,7 +180,6 @@ class RegisterProfileView(View):
         form = UserProfileForm()
         return render(request, 'rango/profile_registration.html', {'form': form})
 
-
     @method_decorator(login_required())
     def post(self, request):
         form = UserProfileForm(request.POST, request.FILES)
@@ -187,3 +191,61 @@ class RegisterProfileView(View):
         else:
             print(form.errors)
         return render(request, 'rango/profile_registration.html', {'form': form})
+
+#!base class view for profile
+class ProfileView(View):
+    def get_user_details(self, username):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+
+        user_profile = UserProfile.objects.get_or_create(user=user)[0]
+        form = UserProfileForm({
+            'website': user_profile.website,
+            'picture': user_profile.picture
+        })
+        return(user, user_profile, form)
+
+    @method_decorator(login_required())
+    def get(self, request, username):
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('rango:index'))
+
+        context_dict = {
+            'user_profile': user_profile,
+            'selected_user': user,
+            'form': form
+        }
+        return render(request, 'rango/profile.html', context_dict)
+
+    @method_decorator(login_required())
+    def post(self, request, username):
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('rango:index'))
+
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('rango:profile', user.username)
+        else:
+            print(form.errors)
+
+        context_dict = {
+            'user_profile': user_profile,
+            'selected_user': user,
+            'form': form
+        }
+        return render(request, 'rango/profile.html', context_dict)
+
+#!base class view for profile list
+class ListProfileView(View):
+    @method_decorator(login_required())
+    def get(self, request):
+        profiles = UserProfile.objects.all()
+
+        return render(request, 'rango/list_profile.html', {'user_profile_list':profiles})

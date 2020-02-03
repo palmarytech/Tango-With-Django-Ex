@@ -1,0 +1,37 @@
+{% extends 'rango/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+User Profile
+{% endblock %}
+
+{% block body_block %}
+<div class="jumbotron p-6">
+    <h1 class="jumbotron-heading">User Profile</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        {% if user_profile_list %}
+        <div class="list-group">
+            {% for list_user in user_profile_list %}
+            <div class="list-group-item">
+                <h6 class="list-group-item-heading">
+                    {% if list_user.picture %}
+                    <img src="{{ MEDIA_URL }}{{ list_user.picture }}" width="64" height="64" alt="Placeholder image">
+                    {% else %}
+                    <img src="https://loremflickr.com/64/64?random=1/" width="64" height="64" alt="{{ list_user.user.username }}">
+                    {% endif %}
+                    <a href="{% url 'rango:profile' list_user.user.username %}">
+                        {{ list_user.user.username }}
+                    </a>
+                </h6>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>There are no users prsent on Rango</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

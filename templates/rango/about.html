@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    About Rango
+About Rango
 {% endblock %}
 
 {% block body_block %}
@@ -17,6 +17,10 @@
         <p class="leading">This tutorial has been put together by {{ your_name }}</p>
     </div>
 </div>
+<button class="btn btn-primary" onclick="alert('You clicked the button using inline javaScript');">
+    Click Me - I run on vanilla JavaScript
+</button>
+<br />
 <img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
 <img src="{{ MEDIA_URL }}cat.jpg" alt="Picture of a Cat" />
 {% endblock %}
