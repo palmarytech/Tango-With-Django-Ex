@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\Dave-\\envs\\rangoenv\\Scripts\\python.exe"
+    "python.pythonPath": "C:\\Users\\Dave-\\envs\\rangoenv\\Scripts\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }
