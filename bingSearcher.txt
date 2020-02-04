@@ -1,3 +1,6 @@
 NAME Rango-bing-searcher
 KEY1 18e26b8a5b644c02aa8abcff0ba72c68
 KEY2 9a58358b4f3e45389088dd6553973a95
+
+google AIzaSyAVhRF9tIsJIp6W8aY2PCBbwNH6Vx4gBG0
+youtube AIzaSyDsTawoOrIZbtj4FOL5APi1ivywGfp-z5I

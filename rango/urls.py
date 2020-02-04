@@ -15,7 +15,11 @@ urlpatterns = [
     # path('logout/', views.user_logout, name='logout'),
     # path('search/', views.search, name='search'),
     path('goto/', views.GotoUrlView.as_view(), name='goto'),
-    path('register_profile/', views.RegisterProfileView.as_view(), name='register_profile'),
+    path('register-profile/', views.RegisterProfileView.as_view(), name='register_profile'),
     path('profile/<username>/', views.ProfileView.as_view(), name='profile'),
     path('profile/', views.ListProfileView.as_view(), name='list_profile'),
+    path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
+    path('suggest/', views.CategorySuggestionView.as_view(), name='suggest'),
+    path('search_add_pages/', views.SearchAddPageView.as_view(), name='search_add_pages'),
+
 ]

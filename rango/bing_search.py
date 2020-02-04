@@ -36,7 +36,7 @@ def run_query(search_terms):
 
 def main():
     query = input()
-    run_query(query)
+    print(run_query(query))
 
 if __name__ == "__main__":
     main()

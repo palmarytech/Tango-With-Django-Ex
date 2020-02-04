@@ -13,6 +13,13 @@ Unknown Category
 <div class="jumbotron p-6">
     {% if category %}
     <h1>{{ category.name }}</h1>
+    <div>
+        {% if user.is_authenticated %}
+        <button data-categoryid="{{ category.id }}" id="like_btn" class="btn btn-primary btn-sm" type="button"><span
+                data-feather='thumbs-up'></span>Like Category</button>
+        {% endif %}
+        <strong id="like_count">{{ category.likes }}</strong> likes
+    </div>
 </div>
 <div class="container">
     <div class="row">
@@ -20,7 +27,7 @@ Unknown Category
             <div class="card mb-6">
                 <div class="card-body">
                     <h2>Pages in {{ category.name }}</h2>
-                    <p class="card-text">
+                    <div id="page-listing"">
                         {% if pages %}
                         <ul class="list-group">
                             {% for page in pages %}
@@ -34,10 +41,11 @@ Unknown Category
                             </li>
                             {% endfor %}
                         </ul>
+                    
                         {% else %}
                         <strong>No pages currently in category.</strong>
                         {% endif %}
-                    </p>
+                    </div>
                     <br />
                     {% if user.is_authenticated %}
                     <a class="btn btn-primary" href="{% url 'rango:add_page' category.slug %}">Add Page</a><br />
@@ -62,7 +70,9 @@ Unknown Category
                                 <h5 class="list-group-item-heading">
                                     <a href="{{ result.link }}">
                                         {{ result.title|safe|escape }}
+                                        {{ result.link|safe|escape }}
                                     </a>
+                                    <button class="btn btn-info btn-sm rango-page-add" type="button" data-categoryid="{{ category.id }}" data-title="{{ result.title }}" data-url="{{ result.link }}">Add</button>
                                 </h5>
                                 <p class="list-group-item-text">
                                     {{ result.summary|safe|escape }}
