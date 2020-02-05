@@ -17,8 +17,12 @@ Unknown Category
         {% if user.is_authenticated %}
         <button data-categoryid="{{ category.id }}" id="like_btn" class="btn btn-primary btn-sm" type="button"><span
                 data-feather='thumbs-up'></span>Like Category</button>
-        {% endif %}
         <strong id="like_count">{{ category.likes }}</strong> likes
+
+        <button data-connectOk={{ conn }} id="ctn_btn" class="btn btn-info btn-sm" type="button"><span
+            data-feather='upload'></span>Connect Server</button>
+        <strong id="ctn_info">{{ connInfo }}</strong>
+        {% endif %}
     </div>
 </div>
 <div class="container">

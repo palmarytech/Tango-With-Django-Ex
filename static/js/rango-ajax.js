@@ -11,6 +11,19 @@ $(document).ready(function () {
           })
     });
 
+    $('#ctn_btn').click(function(){
+        var connInfo;
+        connInfo = $(this).attr('data-connectOk');
+
+        $.get("/rango/conn_server",
+        {'conn_info':connInfo},
+        function (data) {
+            $('#ctn_info').html(data);
+            $('#ctn_btn').hide();
+          })
+    });
+
+
     $('#search-input').keyup(function () { 
         var query;
         query = $(this).val();

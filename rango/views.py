@@ -84,6 +84,7 @@ class ShowCategoryView(View):
             pages = Page.objects.filter(category=category).order_by('-views')
             context_dict['pages'] = pages
             context_dict['category'] = category
+            context_dict['conn'] = 1
         except Category.DoesNotExist:
             context_dict['pages'] = None
             context_dict['category'] = None
@@ -298,6 +299,16 @@ class LikeCategoryView(View):
         category.save()
 
         return HttpResponse(category.likes)
+
+
+
+class ConnSeverView(View):
+    def get(self, request):
+        connInfo = request.GET['conn_info']
+        if int(connInfo) == 1:
+            return HttpResponse("connected")
+        # return HttpResponse(connInfo)
+
 
 
 # !base class view for search category function

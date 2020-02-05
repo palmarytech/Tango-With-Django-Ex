@@ -21,5 +21,6 @@ urlpatterns = [
     path('like_category/', views.LikeCategoryView.as_view(), name='like_category'),
     path('suggest/', views.CategorySuggestionView.as_view(), name='suggest'),
     path('search_add_pages/', views.SearchAddPageView.as_view(), name='search_add_pages'),
+    path('conn_server/', views.ConnSeverView.as_view(), name='conn_server'),
 
 ]
