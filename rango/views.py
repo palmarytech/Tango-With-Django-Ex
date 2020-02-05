@@ -82,6 +82,8 @@ class ShowCategoryView(View):
         try:
             category = Category.objects.get(slug=category_name_slug)
             pages = Page.objects.filter(category=category).order_by('-views')
+            category.views = category.views + 1
+            category.save()
             context_dict['pages'] = pages
             context_dict['category'] = category
             context_dict['conn'] = 1
@@ -92,6 +94,7 @@ class ShowCategoryView(View):
 
     def get(self, request, category_name_slug):
         context_dict = self.create_context_dict(category_name_slug)
+
         return render(request, "rango/category.html", context_dict)
 
     @method_decorator(login_required())
